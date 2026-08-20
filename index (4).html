@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You ♡</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700&family=Patrick+Hand&display=swap');
+
+*{box-sizing:border-box}
+body{
+  margin:0; min-height:100vh; overflow:hidden;
+  display:flex; justify-content:center; align-items:center;
+  background:#f7c8bd; font-family:"DM Sans",sans-serif;
+}
+.scene{width:min(94vw,620px); text-align:center; position:relative}
+.open-btn{
+  border:0; background:transparent; color:#9c4c4c;
+  font-weight:700; font-size:13px; cursor:pointer;
+  letter-spacing:.4px; margin-bottom:20px;
+}
+.open-btn span{
+  display:inline-grid; place-items:center; width:28px; height:28px;
+  border:2px solid #9c4c4c; border-radius:50%; margin-right:7px;
+}
+.envelope-wrap{
+  height:280px; position:relative; transition:.8s;
+}
+.envelope{
+  position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  width:min(82vw,470px); height:270px;
+  background:#f6dfce; box-shadow:0 18px 35px #9b625044;
+  border-radius:4px; cursor:pointer;
+}
+.envelope:before{
+  content:""; position:absolute; inset:0;
+  background:#eed1bd; clip-path:polygon(0 0,50% 53%,100% 0,100% 100%,0 100%);
+}
+.flap{
+  position:absolute; z-index:4; top:0; left:0; width:100%; height:145px;
+  background:#f9e7d9; clip-path:polygon(0 0,100% 0,50% 100%);
+  transform-origin:top; transition:1s;
+  filter:drop-shadow(0 3px 3px #9b625022);
+}
+.seal{
+  position:absolute; z-index:6; left:50%; top:53%; transform:translate(-50%,-50%);
+  width:58px;height:58px;border-radius:50%;background:#b95c5c;color:white;
+  display:grid;place-items:center;font-size:25px;box-shadow:0 4px 10px #6e3c3c33;
+  transition:.6s;
+}
+.letter{
+  position:absolute; z-index:3; left:50%; top:50%;
+  width:min(78vw,430px); min-height:420px; padding:38px 34px;
+  background:#fff0e3; text-align:left;
+  transform:translate(-50%,-20%) scale(.55);
+  opacity:0; pointer-events:none;
+  box-shadow:0 15px 30px #8d5b4c33;
+  transition:1s cubic-bezier(.2,.8,.2,1);
+}
+.letter p{
+  margin:0 0 22px; color:#252525;
+  font-family:"Patrick Hand","Comic Sans MS",cursive;
+  font-size:20px; line-height:1.45;
+}
+.letter .hello{font-size:26px}
+.letter hr{border:0;border-top:2px solid #d9d0ca;margin:25px 0}
+.signature{margin-top:30px}
+.open .flap{transform:rotateX(180deg);z-index:1}
+.open .seal{opacity:0;transform:translate(-50%,-50%) scale(.4)}
+.open .envelope{opacity:0;transform:translate(-50%,-50%) scale(.8);pointer-events:none}
+.open .letter{
+  opacity:1; pointer-events:auto; transform:translate(-50%,-50%) scale(1);
+}
+.open .envelope-wrap{height:560px}
+.controls{display:none; margin-top:12px}
+.open .controls{display:block}
+.reset{
+  border:0;background:transparent;color:#9c4c4c;font-weight:700;cursor:pointer;
+}
+.heart{
+  position:fixed; bottom:-30px; font-size:18px; opacity:.75;
+  animation:rise linear forwards; pointer-events:none;
+}
+@keyframes rise{
+  from{transform:translateY(0) rotate(0);opacity:0}
+  15%{opacity:.75}
+  to{transform:translateY(-110vh) rotate(25deg);opacity:0}
+}
+@media(max-width:520px){
+  .envelope{height:225px}
+  .envelope-wrap{height:235px}
+  .letter{min-height:390px;padding:30px 25px}
+  .letter p{font-size:17px}
+  .letter .hello{font-size:23px}
+  .open .envelope-wrap{height:500px}
+}
+</style>
+</head>
+<body>
+
+<div class="scene" id="scene">
+  <button class="open-btn" id="openBtn"><span>✉</span> TAP TO OPEN</button>
+
+  <div class="envelope-wrap">
+    <div class="envelope" id="envelope">
+      <div class="flap"></div>
+      <div class="seal">♡</div>
+    </div>
+
+    <article class="letter">
+      <p class="hello">Dear Opie,</p>
+
+      <p>
+        Untuk seseorang yang mungkin nggak sadar
+        betapa berartinya dirinya.
+      </p>
+
+      <p>
+        Haii, Opie.
+      </p>
+
+      <p>
+        Terima kasih untuk setiap cerita, tawa, dan momen kecil
+        yang pernah ada. Mengenalmu adalah salah satu hal yang
+        nggak pernah aku sangka. Bahkan dulu, namamu saja aku
+        nggak tahu. Tapi sekarang, kamu menjadi seseorang yang
+        begitu berarti bagiku.
+      </p>
+
+      <hr>
+
+      <p>
+        Maaf atas segala hal yang pernah aku perbuat kepadamu.
+        Bagaimanapun rasa sakit yang pernah aku rasakan, semuanya
+        terkalahkan oleh rasa cintaku kepadamu yang jauh lebih besar.
+      </p>
+
+      <p>
+        Aku harap kamu selalu menjaga kesehatan dan tetap semangat
+        dalam menjalani hari-harimu.
+      </p>
+
+      <p>
+        Izinkan aku untuk selalu merindukanmu. Walaupun ada yang
+        berkata bahwa rindu itu berat, dan ada juga yang berkata
+        bahwa rindu itu indah. Entah rindu akan terasa indah ataupun
+        berat, aku akan tetap merindukanmu.
+      </p>
+
+      <p>
+        Bolehkah aku menjadi alis matamu, yang tak pernah tersentuh
+        oleh air matamu?
+      </p>
+
+      <p class="signature">
+        Take care, Opie.<br>
+        <b>— Gipa ♡</b>
+      </p>
+    </article>
+  </div>
+
+  <div class="controls">
+    <button class="reset" id="resetBtn">↩ Kembali ke amplop</button>
+  </div>
+</div>
+
+<script>
+const scene=document.getElementById("scene");
+const openBtn=document.getElementById("openBtn");
+const envelope=document.getElementById("envelope");
+const resetBtn=document.getElementById("resetBtn");
+
+function openLetter(){
+  scene.classList.add("open");
+  openBtn.innerHTML="<span>♡</span> FOR YOU";
+  for(let i=0;i<9;i++) setTimeout(makeHeart,i*180);
+}
+function resetLetter(){
+  scene.classList.remove("open");
+  openBtn.innerHTML="<span>✉</span> TAP TO OPEN";
+}
+openBtn.addEventListener("click",openLetter);
+envelope.addEventListener("click",openLetter);
+resetBtn.addEventListener("click",resetLetter);
+
+function makeHeart(){
+  const h=document.createElement("div");
+  h.className="heart";
+  h.textContent=Math.random()>.5?"♡":"♥";
+  h.style.left=(10+Math.random()*80)+"vw";
+  h.style.animationDuration=(5+Math.random()*4)+"s";
+  h.style.fontSize=(14+Math.random()*13)+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),9500);
+}
+</script>
+</body>
+</html>
