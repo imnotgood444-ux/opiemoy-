@@ -50,13 +50,17 @@ body{
 }
 .letter{
   position:absolute; z-index:3; left:50%; top:50%;
-  width:min(78vw,430px); min-height:420px; padding:38px 34px;
+  width:min(78vw,430px); height:420px; padding:38px 34px;
   background:#fff0e3; text-align:left;
   transform:translate(-50%,-20%) scale(.55);
   opacity:0; pointer-events:none;
   box-shadow:0 15px 30px #8d5b4c33;
   transition:1s cubic-bezier(.2,.8,.2,1);
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
 }
+.letter::-webkit-scrollbar{width:6px}
+.letter::-webkit-scrollbar-thumb{background:#d9b3a6;border-radius:10px}
 .letter p{
   margin:0 0 22px; color:#252525;
   font-family:"Patrick Hand","Comic Sans MS",cursive;
@@ -89,7 +93,7 @@ body{
 @media(max-width:520px){
   .envelope{height:225px}
   .envelope-wrap{height:235px}
-  .letter{min-height:390px;padding:30px 25px}
+  .letter{height:390px;padding:30px 25px}
   .letter p{font-size:17px}
   .letter .hello{font-size:23px}
   .open .envelope-wrap{height:500px}
@@ -195,4 +199,4 @@ function makeHeart(){
 }
 </script>
 </body>
-</html>
+  </html>
