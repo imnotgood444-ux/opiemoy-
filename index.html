@@ -102,6 +102,8 @@ body{
 </head>
 <body>
 
+<audio id="bgMusic" src="music.mp3" loop preload="auto"></audio>
+
 <div class="scene" id="scene">
   <button class="open-btn" id="openBtn"><span>✉</span> TAP TO OPEN</button>
 
@@ -173,15 +175,20 @@ const scene=document.getElementById("scene");
 const openBtn=document.getElementById("openBtn");
 const envelope=document.getElementById("envelope");
 const resetBtn=document.getElementById("resetBtn");
+const bgMusic=document.getElementById("bgMusic");
 
 function openLetter(){
   scene.classList.add("open");
   openBtn.innerHTML="<span>♡</span> FOR YOU";
   for(let i=0;i<9;i++) setTimeout(makeHeart,i*180);
+  bgMusic.volume=0.6;
+  bgMusic.play().catch(()=>{});
 }
 function resetLetter(){
   scene.classList.remove("open");
   openBtn.innerHTML="<span>✉</span> TAP TO OPEN";
+  bgMusic.pause();
+  bgMusic.currentTime=0;
 }
 openBtn.addEventListener("click",openLetter);
 envelope.addEventListener("click",openLetter);
@@ -199,4 +206,4 @@ function makeHeart(){
 }
 </script>
 </body>
-  </html>
+</html>
