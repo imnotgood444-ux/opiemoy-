@@ -13,7 +13,57 @@ body{
   display:flex; justify-content:center; align-items:center;
   background:#f7c8bd; font-family:"DM Sans",sans-serif;
 }
-.scene{width:min(94vw,620px); text-align:center; position:relative}
+
+/* ===== PIN SCREEN ===== */
+#pinScreen{
+  position:fixed; inset:0; z-index:100;
+  background:linear-gradient(160deg,#f7c8bd,#f6dfce 60%,#f7c8bd);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  transition:opacity .7s ease, visibility .7s ease;
+}
+#pinScreen.hide{opacity:0; visibility:hidden; pointer-events:none}
+.pin-icon{font-size:34px; margin-bottom:6px}
+.pin-title{color:#7a3b3b; font-size:22px; font-weight:700; margin:0 0 4px}
+.pin-sub{color:#9c4c4c; font-size:13px; margin:0 0 18px}
+.pin-dots{display:flex; gap:10px; margin-bottom:26px}
+.pin-dot{
+  width:12px; height:12px; border-radius:50%;
+  border:2px solid #b9756f; transition:.25s;
+}
+.pin-dot.filled{background:#b95c5c; border-color:#b95c5c}
+.pin-dot.error{border-color:#ff6b6b; background:#ff6b6b}
+.pin-pad{
+  display:grid; grid-template-columns:repeat(3,64px); gap:14px;
+}
+.pin-key{
+  width:64px; height:64px; border-radius:50%; border:0;
+  background:#ffffffa8; color:#7a3b3b; font-size:22px; font-weight:600;
+  cursor:pointer; transition:.2s; box-shadow:0 4px 10px #9b625022;
+}
+.pin-key:active{background:#ffffffe0; transform:scale(.94)}
+.pin-key.enter{background:#b95c5c; color:#fff; font-size:20px}
+.pin-key.clear{background:transparent; color:#9c4c4c; font-size:18px; box-shadow:none}
+.pin-shake{animation:shake .4s}
+@keyframes shake{
+  20%,60%{transform:translateX(-10px)}
+  40%,80%{transform:translateX(10px)}
+}
+
+/* ===== FLOWER BURST TRANSITION ===== */
+#flowerBurst{
+  position:fixed; inset:0; z-index:90;
+  display:flex; align-items:center; justify-content:center;
+  pointer-events:none; opacity:0; transition:opacity .5s;
+  background:#fff0e6;
+}
+#flowerBurst.show{opacity:1}
+#flowerBurst span{
+  position:absolute; font-size:30px; opacity:0;
+  animation:burstBloom 1.6s ease forwards;
+}
+
+.scene{width:min(94vw,620px); text-align:center; position:relative; opacity:0; transition:opacity .8s ease}
+.scene.reveal{opacity:1}
 .open-btn{
   border:0; background:transparent; color:#9c4c4c;
   font-weight:700; font-size:13px; cursor:pointer;
@@ -61,6 +111,41 @@ body{
 }
 .letter::-webkit-scrollbar{width:6px}
 .letter::-webkit-scrollbar-thumb{background:#d9b3a6;border-radius:10px}
+.big-flower{
+  position:fixed; width:120px; height:120px;
+  pointer-events:none; z-index:0;
+}
+.big-flower.bf1{top:5%; left:4%}
+.big-flower.bf2{bottom:5%; right:4%}
+.petal{
+  transform-box:fill-box; transform-origin:center;
+  opacity:0; animation:petalBloom .9s ease forwards;
+}
+.petal.p1{animation-delay:.2s}
+.petal.p2{animation-delay:.35s}
+.petal.p3{animation-delay:.5s}
+.petal.p4{animation-delay:.65s}
+.petal.p5{animation-delay:.8s}
+.petal.p6{animation-delay:.95s}
+.flower-center{
+  transform-box:fill-box; transform-origin:center;
+  opacity:0; animation:centerPop .5s ease forwards; animation-delay:.15s;
+}
+@keyframes petalBloom{
+  0%{transform:scale(0); opacity:0}
+  45%{opacity:1}
+  70%{transform:scale(1.15)}
+  100%{transform:scale(1); opacity:1}
+}
+@keyframes centerPop{
+  0%{transform:scale(0); opacity:0}
+  100%{transform:scale(1); opacity:1}
+}
+@keyframes burstBloom{
+  0%{transform:scale(0) rotate(-30deg); opacity:0}
+  50%{transform:scale(1.3) rotate(12deg); opacity:1}
+  100%{transform:scale(1) rotate(0deg); opacity:0}
+}
 .corner-flower{
   position:absolute; font-size:26px; opacity:0;
   pointer-events:none; z-index:2; user-select:none;
@@ -69,28 +154,14 @@ body{
 }
 .corner-flower.tl{top:8px; left:8px; animation-delay:.3s}
 .corner-flower.br{bottom:8px; right:8px; animation-delay:.6s}
-.bg-flower{
-  position:fixed; font-size:24px; opacity:0;
-  pointer-events:none; z-index:0; user-select:none;
-  transform-origin:center;
-  animation:bloom 1.4s ease forwards, sway 6s ease-in-out infinite;
-}
-.bg-flower.f1{top:6%; left:6%; animation-delay:.1s,1.5s}
-.bg-flower.f2{top:10%; right:8%; animation-delay:.4s,1.8s}
-.bg-flower.f3{bottom:8%; left:9%; animation-delay:.7s,2.1s}
-.bg-flower.f4{bottom:6%; right:6%; animation-delay:1s,2.4s}
 @keyframes bloom{
   0%{transform:scale(0) rotate(-40deg); opacity:0}
   55%{transform:scale(1.25) rotate(10deg); opacity:.5}
   75%{transform:scale(.92) rotate(-4deg)}
   100%{transform:scale(1) rotate(0deg); opacity:.4}
 }
-@keyframes sway{
-  0%,100%{transform:rotate(-7deg) scale(1)}
-  50%{transform:rotate(7deg) scale(1.05)}
-}
 @media(max-width:520px){
-  .bg-flower{font-size:19px}
+  .big-flower{width:78px; height:78px}
   .corner-flower{font-size:20px}
 }
 .letter p{
@@ -136,10 +207,54 @@ body{
 
 <audio id="bgMusic" src="music.mp3" loop preload="auto"></audio>
 
-<span class="bg-flower f1">🌸</span>
-<span class="bg-flower f2">🌷</span>
-<span class="bg-flower f3">🌼</span>
-<span class="bg-flower f4">🌸</span>
+<!-- ===== PIN SCREEN ===== -->
+<div id="pinScreen">
+  <div class="pin-icon">🌷</div>
+  <p class="pin-title">Untuk Opie</p>
+  <p class="pin-sub">Masukkan tanggal lahirmu</p>
+  <div class="pin-dots" id="pinDots">
+    <span class="pin-dot"></span><span class="pin-dot"></span>
+    <span class="pin-dot"></span><span class="pin-dot"></span>
+    <span class="pin-dot"></span><span class="pin-dot"></span>
+  </div>
+  <div class="pin-pad" id="pinPad">
+    <button class="pin-key" data-k="1">1</button>
+    <button class="pin-key" data-k="2">2</button>
+    <button class="pin-key" data-k="3">3</button>
+    <button class="pin-key" data-k="4">4</button>
+    <button class="pin-key" data-k="5">5</button>
+    <button class="pin-key" data-k="6">6</button>
+    <button class="pin-key" data-k="7">7</button>
+    <button class="pin-key" data-k="8">8</button>
+    <button class="pin-key" data-k="9">9</button>
+    <button class="pin-key clear" id="pinClear">✕</button>
+    <button class="pin-key" data-k="0">0</button>
+    <button class="pin-key enter" id="pinEnter">↵</button>
+  </div>
+</div>
+
+<!-- ===== FLOWER BURST TRANSITION ===== -->
+<div id="flowerBurst"></div>
+
+<svg class="big-flower bf1" viewBox="0 0 100 100">
+  <g transform="rotate(0 50 50)"><ellipse class="petal p1" cx="50" cy="24" rx="13" ry="22" fill="#f4b6c2"/></g>
+  <g transform="rotate(60 50 50)"><ellipse class="petal p2" cx="50" cy="24" rx="13" ry="22" fill="#f4b6c2"/></g>
+  <g transform="rotate(120 50 50)"><ellipse class="petal p3" cx="50" cy="24" rx="13" ry="22" fill="#f4b6c2"/></g>
+  <g transform="rotate(180 50 50)"><ellipse class="petal p4" cx="50" cy="24" rx="13" ry="22" fill="#f4b6c2"/></g>
+  <g transform="rotate(240 50 50)"><ellipse class="petal p5" cx="50" cy="24" rx="13" ry="22" fill="#f4b6c2"/></g>
+  <g transform="rotate(300 50 50)"><ellipse class="petal p6" cx="50" cy="24" rx="13" ry="22" fill="#f4b6c2"/></g>
+  <circle class="flower-center" cx="50" cy="50" r="11" fill="#e8899c"/>
+</svg>
+
+<svg class="big-flower bf2" viewBox="0 0 100 100">
+  <g transform="rotate(0 50 50)"><ellipse class="petal p1" cx="50" cy="24" rx="13" ry="22" fill="#f6c9d1"/></g>
+  <g transform="rotate(60 50 50)"><ellipse class="petal p2" cx="50" cy="24" rx="13" ry="22" fill="#f6c9d1"/></g>
+  <g transform="rotate(120 50 50)"><ellipse class="petal p3" cx="50" cy="24" rx="13" ry="22" fill="#f6c9d1"/></g>
+  <g transform="rotate(180 50 50)"><ellipse class="petal p4" cx="50" cy="24" rx="13" ry="22" fill="#f6c9d1"/></g>
+  <g transform="rotate(240 50 50)"><ellipse class="petal p5" cx="50" cy="24" rx="13" ry="22" fill="#f6c9d1"/></g>
+  <g transform="rotate(300 50 50)"><ellipse class="petal p6" cx="50" cy="24" rx="13" ry="22" fill="#f6c9d1"/></g>
+  <circle class="flower-center" cx="50" cy="50" r="11" fill="#e8899c"/>
+</svg>
 
 <div class="scene" id="scene">
   <button class="open-btn" id="openBtn"><span>✉</span> TAP TO OPEN</button>
@@ -220,18 +335,92 @@ const envelope=document.getElementById("envelope");
 const resetBtn=document.getElementById("resetBtn");
 const bgMusic=document.getElementById("bgMusic");
 
+/* ===== PIN LOGIC ===== */
+const CORRECT_PIN="030412";
+let enteredPin="";
+const pinScreen=document.getElementById("pinScreen");
+const pinDots=document.querySelectorAll(".pin-dot");
+const pinPad=document.getElementById("pinPad");
+const flowerBurst=document.getElementById("flowerBurst");
+
+function updateDots(){
+  pinDots.forEach((d,i)=>{
+    d.classList.toggle("filled", i<enteredPin.length);
+  });
+}
+function pinError(){
+  pinDots.forEach(d=>d.classList.add("error"));
+  pinScreen.querySelector(".pin-dots").classList.add("pin-shake");
+  setTimeout(()=>{
+    pinDots.forEach(d=>d.classList.remove("error"));
+    pinScreen.querySelector(".pin-dots").classList.remove("pin-shake");
+    enteredPin="";
+    updateDots();
+  },500);
+}
+function spawnFlowerBurst(){
+  flowerBurst.classList.add("show");
+  const emojis=["🌸","🌷","🌼","🌺"];
+  for(let i=0;i<18;i++){
+    setTimeout(()=>{
+      const f=document.createElement("span");
+      f.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+      f.style.left=(10+Math.random()*80)+"vw";
+      f.style.top=(15+Math.random()*70)+"vh";
+      f.style.fontSize=(24+Math.random()*22)+"px";
+      f.style.animationDelay=(Math.random()*.3)+"s";
+      flowerBurst.appendChild(f);
+      setTimeout(()=>f.remove(),1800);
+    },i*70);
+  }
+}
+function unlockPin(){
+  spawnFlowerBurst();
+  bgMusic.volume=0.6;
+  bgMusic.play().catch(()=>{});
+  setTimeout(()=>{
+    pinScreen.classList.add("hide");
+    scene.classList.add("reveal");
+  },700);
+  setTimeout(()=>{
+    flowerBurst.classList.remove("show");
+  },2200);
+}
+pinPad.addEventListener("click",(e)=>{
+  const btn=e.target.closest(".pin-key");
+  if(!btn) return;
+  if(btn.id==="pinClear"){
+    enteredPin=enteredPin.slice(0,-1);
+    updateDots();
+    return;
+  }
+  if(btn.id==="pinEnter"){
+    if(enteredPin.length===CORRECT_PIN.length){
+      if(enteredPin===CORRECT_PIN) unlockPin();
+      else pinError();
+    }
+    return;
+  }
+  if(btn.dataset.k!==undefined && enteredPin.length<CORRECT_PIN.length){
+    enteredPin+=btn.dataset.k;
+    updateDots();
+    if(enteredPin.length===CORRECT_PIN.length){
+      setTimeout(()=>{
+        if(enteredPin===CORRECT_PIN) unlockPin();
+        else pinError();
+      },200);
+    }
+  }
+});
+
 function openLetter(){
   scene.classList.add("open");
   openBtn.innerHTML="<span>♡</span> FOR YOU";
   for(let i=0;i<9;i++) setTimeout(makeHeart,i*180);
-  bgMusic.volume=0.6;
-  bgMusic.play().catch(()=>{});
 }
 function resetLetter(){
   scene.classList.remove("open");
   openBtn.innerHTML="<span>✉</span> TAP TO OPEN";
-  bgMusic.pause();
-  bgMusic.currentTime=0;
 }
 openBtn.addEventListener("click",openLetter);
 envelope.addEventListener("click",openLetter);
